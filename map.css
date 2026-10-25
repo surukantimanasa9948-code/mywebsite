@@ -1,0 +1,693 @@
+/* =========================================================================
+   Campus Map & Semi-Circular Floor Plan Stylesheet
+   ========================================================================= */
+
+.map-layout-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* Map Navigation & Filter Sidebar Card */
+.map-control-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Floor Selector Buttons */
+.floor-selector {
+  display: flex;
+  gap: 6px;
+  background: var(--bg-app);
+  padding: 6px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+}
+
+.floor-btn {
+  flex: 1;
+  padding: 8px 4px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: var(--transition-normal);
+  text-align: center;
+}
+
+.floor-btn:hover {
+  background: rgba(19, 64, 116, 0.08);
+  color: var(--navy-800);
+}
+
+.floor-btn.active {
+  background: var(--navy-700);
+  color: #FFFFFF;
+  box-shadow: 0 2px 6px rgba(19, 64, 116, 0.25);
+}
+
+/* Search Box */
+.map-search-box {
+  position: relative;
+}
+
+.map-search-box input {
+  padding-left: 38px;
+  padding-right: 32px;
+}
+
+.search-clear-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  font-size: 13px;
+  color: var(--text-muted);
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.15s ease;
+  line-height: 1;
+}
+
+.search-clear-btn:hover {
+  color: var(--navy-800);
+}
+
+.search-result-hint {
+  margin-top: 8px;
+  font-size: 11px;
+  color: var(--navy-700);
+  background: var(--bg-app);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--blue-500);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-result-hint button {
+  background: var(--blue-500);
+  color: #fff;
+  border: none;
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.search-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text-light);
+  pointer-events: none;
+}
+
+/* Safety Equipment Toggles */
+.safety-toggles {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.toggle-chip {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid var(--border-color);
+  background: #FFFFFF;
+  color: var(--navy-700);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition-normal);
+}
+
+.toggle-chip.active {
+  background: var(--navy-700);
+  color: #FFFFFF;
+  border-color: var(--navy-700);
+}
+
+/* Route Planner Box */
+.route-planner-card {
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+
+.route-planner-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-800);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.route-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.route-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Turn-by-Turn Guidance Drawer */
+.route-guidance-box {
+  display: none;
+  background: #FFFFFF;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  margin-top: 14px;
+  animation: fadeIn 0.3s ease;
+}
+
+.route-guidance-box.active {
+  display: block;
+}
+
+.route-metrics {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.metric-item {
+  text-align: center;
+}
+.metric-item .val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+.metric-item .lbl {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.directions-list {
+  list-style: none;
+  font-size: 12px;
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 180px;
+  overflow-y: auto;
+}
+
+.directions-list li {
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.4;
+}
+
+.directions-list li::before {
+  content: "•";
+  position: absolute;
+  left: 4px;
+  color: var(--blue-500);
+  font-weight: 700;
+  font-size: 14px;
+}
+
+/* SVG Map Canvas Container */
+.map-canvas-card {
+  position: relative;
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.map-toolbar {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  background: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 10;
+}
+
+.map-status-pill {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--navy-800);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--status-resolved);
+}
+
+.map-controls-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.map-zoom-btn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-card);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--navy-800);
+  font-size: 14px;
+  font-weight: 700;
+}
+.map-zoom-btn:hover {
+  background: var(--bg-app);
+}
+
+.map-pan-hint {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-right: 6px;
+  background: var(--bg-app);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  user-select: none;
+}
+
+#mapClearBtn {
+  background: #FFFFFF;
+  color: var(--navy-800);
+  border: 1px solid var(--border-color);
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+#mapClearBtn:hover {
+  background: var(--bg-app);
+  border-color: var(--navy-700);
+  color: var(--emergency-red);
+}
+
+/* SVG Stage */
+.svg-viewport {
+  width: 100%;
+  min-height: 560px;
+  background: radial-gradient(circle at center, #F8FAFD 0%, #EEF4F8 100%);
+  position: relative;
+  overflow: hidden;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.svg-viewport.is-dragging {
+  cursor: grabbing !important;
+}
+
+#campusMapSvg {
+  width: 100%;
+  height: 100%;
+  min-height: 560px;
+  display: block;
+  user-select: none;
+}
+
+.map-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.75);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--navy-800);
+  z-index: 40;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+
+/* Semi-Circular SVG Elements */
+.svg-building-arc {
+  fill: #FFFFFF;
+  stroke: #CBD5E1;
+  stroke-width: 2;
+}
+
+.svg-corridor-arc {
+  fill: none;
+  stroke: #E2E8F0;
+  stroke-width: 32;
+  stroke-linecap: round;
+}
+
+.svg-corridor-guideline {
+  fill: none;
+  stroke: #94A3B8;
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+/* Room Polygons & Shapes */
+.svg-room {
+  cursor: pointer;
+  transition: all 0.2s ease;
+  stroke: #94A3B8;
+  stroke-width: 1.2;
+}
+
+.svg-room.category-classroom {
+  fill: #F1F5F9;
+}
+
+.svg-room.category-laboratory {
+  fill: #E0E7FF;
+  stroke: #6366F1;
+}
+
+.svg-room.category-seminar_hall {
+  fill: #FEF3C7;
+  stroke: #D97706;
+}
+
+.svg-room.category-washroom {
+  fill: #E0F2FE;
+  stroke: #0284C7;
+}
+
+.svg-room.category-medical {
+  fill: #DCFCE7;
+  stroke: #16A34A;
+}
+
+.svg-room.category-exit,
+.svg-room.category-stairs,
+.svg-room.category-staircase {
+  fill: #FEE2E2;
+  stroke: #DC2626;
+}
+
+.svg-room.category-elevator {
+  fill: #F3E8FF;
+  stroke: #9333EA;
+}
+
+.svg-room:hover {
+  fill: #BFDBFE !important;
+  stroke: var(--blue-500) !important;
+  stroke-width: 2.5;
+  filter: drop-shadow(0 4px 8px rgba(37, 99, 235, 0.3));
+}
+
+.svg-room.selected {
+  fill: #93C5FD !important;
+  stroke: var(--navy-800) !important;
+  stroke-width: 3;
+}
+
+.svg-room.destination {
+  fill: #FED7AA !important;
+  stroke: #EA580C !important;
+  stroke-width: 3;
+}
+
+.svg-room.evacuation-target {
+  fill: #BBF7D0 !important;
+  stroke: #16A34A !important;
+  stroke-width: 3.5;
+}
+
+/* Room Labels */
+.svg-room-label {
+  font-size: 10px;
+  font-family: inherit;
+  font-weight: 700;
+  fill: var(--navy-800);
+  pointer-events: none;
+  text-anchor: middle;
+  dominant-baseline: central;
+}
+
+/* Animated Navigation Path */
+.svg-nav-path {
+  fill: none;
+  stroke: #2563EB;
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 8 6;
+  animation: navDash 1s linear infinite;
+  filter: drop-shadow(0 2px 6px rgba(37, 99, 235, 0.5));
+}
+
+.svg-nav-path.evacuation {
+  stroke: #16A34A;
+  stroke-width: 7;
+  filter: drop-shadow(0 2px 8px rgba(22, 163, 74, 0.6));
+}
+
+@keyframes navDash {
+  to {
+    stroke-dashoffset: -28;
+  }
+}
+
+/* Blocked Node Indicator */
+.svg-blocked-barricade {
+  fill: var(--emergency-red);
+  stroke: #FFFFFF;
+  stroke-width: 2;
+  filter: drop-shadow(0 0 4px rgba(220, 38, 38, 0.6));
+}
+
+/* Safety Resource Icons in SVG */
+.svg-safety-marker {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.svg-safety-marker:hover {
+  transform: scale(1.3);
+}
+
+/* Map Tooltip */
+.map-tooltip {
+  position: absolute;
+  display: none;
+  background: var(--navy-900);
+  color: #FFFFFF;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 100;
+  box-shadow: var(--shadow-md);
+  max-width: 220px;
+  line-height: 1.3;
+}
+
+.map-tooltip .title {
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 2px;
+}
+.map-tooltip .sub {
+  color: var(--blue-200);
+  font-size: 11px;
+}
+
+/* Room Inspection Drawer */
+.room-inspect-drawer {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+  max-width: 480px;
+  background: #FFFFFF;
+  border-radius: var(--radius-lg);
+  padding: 18px 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-lg);
+  display: none;
+  z-index: 50;
+  animation: slideUp 0.25s ease;
+}
+
+.room-inspect-drawer.active {
+  display: block;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.inspect-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.inspect-header h4 {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--navy-800);
+}
+
+.inspect-desc {
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+}
+
+.inspect-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* Equipment Drawer Accent */
+.equipment-drawer {
+  border-left: 4px solid var(--navy-700);
+}
+
+/* Safety Equipment Overlay Chips & Count */
+.chip-count {
+  background: rgba(0, 0, 0, 0.08);
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 2px;
+}
+
+.toggle-chip.active .chip-count {
+  background: rgba(255, 255, 255, 0.25);
+  color: #FFFFFF;
+}
+
+/* Status Badges */
+.badge-operational {
+  background: #DCFCE7;
+  color: #15803D;
+  border: 1px solid #86EFAC;
+}
+
+.badge-under_inspection {
+  background: #FEF3C7;
+  color: #B45309;
+  border: 1px solid #FCD34D;
+}
+
+.badge-maintenance_needed {
+  background: #FEE2E2;
+  color: #B91C1C;
+  border: 1px solid #FCA5A5;
+}
+
+/* Safety Resource Marker in SVG (Static, non-blinking) */
+.svg-safety-marker {
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+  animation: none !important;
+}
+
+.svg-safety-marker:hover {
+  transform: scale(1.35);
+  filter: drop-shadow(0 0 6px rgba(19, 64, 116, 0.6));
+}
+
+.svg-safety-marker.selected {
+  transform: scale(1.45);
+  filter: drop-shadow(0 0 10px rgba(37, 99, 235, 0.9));
+}
+
+/* Static warning indicator for equipment needing maintenance - steady display without blinking */
+.svg-safety-marker.warning-pulse,
+.svg-safety-marker.warning-indicator {
+  animation: none !important;
+  filter: drop-shadow(0 0 4px rgba(220, 38, 38, 0.75));
+}
+
+/* Equipment Move Mode Banner */
+.equip-move-banner {
+  background: linear-gradient(135deg, #1E3A8A, #2563EB);
+  color: #FFFFFF;
+  padding: 8px 16px;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid #60A5FA;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+  animation: slideDownBanner 0.25s ease;
+  z-index: 20;
+}
+
+@keyframes slideDownBanner {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.pulsing-move-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #FCD34D;
+  box-shadow: 0 0 4px rgba(252, 211, 77, 0.6);
+  display: inline-block;
+}
+
+/* Canvas Crosshair Cursor in Move / Placement Mode */
+.svg-viewport.moving-mode svg {
+  cursor: crosshair !important;
+}
+
+.svg-viewport.moving-mode .svg-safety-marker {
+  pointer-events: none;
+}
+
+

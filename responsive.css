@@ -1,0 +1,154 @@
+/* =========================================================================
+   Responsive Design & Mobile Optimization
+   ========================================================================= */
+
+@media (max-width: 1024px) {
+  .map-layout-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .app-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .app-sidebar.mobile-open {
+    transform: translateX(0);
+  }
+
+  .main-wrapper {
+    margin-left: 0;
+    width: 100vw;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex;
+  }
+
+  .sidebar-backdrop {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(11, 37, 69, 0.5);
+    z-index: 95;
+  }
+  .sidebar-backdrop.active {
+    display: block;
+  }
+
+  .demo-role-switcher {
+    display: none; /* Accessible in mobile drawer/profile */
+  }
+}
+
+@media (max-width: 768px) {
+  .app-header {
+    padding: 0 16px;
+  }
+
+  .content-body {
+    padding: 16px;
+  }
+
+  .kpi-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .kpi-card {
+    padding: 14px;
+    gap: 12px;
+  }
+
+  .kpi-icon {
+    width: 42px;
+    height: 42px;
+  }
+
+  .kpi-info .kpi-value {
+    font-size: 20px;
+  }
+
+  .emergency-type-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card-header {
+    padding: 14px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-header .btn {
+    width: 100%;
+  }
+
+  .card-body {
+    padding: 16px;
+  }
+
+  .modal-dialog {
+    margin: 10px;
+    max-height: 95vh;
+  }
+
+  .toast-container {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+  }
+  .toast {
+    min-width: unset;
+    width: 100%;
+  }
+
+  /* Floating Bottom SOS Button for Mobile */
+  .mobile-floating-sos {
+    display: flex;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: var(--emergency-red);
+    color: #FFFFFF;
+    border-radius: 50px;
+    padding: 14px 22px;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(220, 38, 38, 0.5);
+    border: none;
+    cursor: pointer;
+    align-items: center;
+    gap: 10px;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-floating-sos {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .kpi-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Reduced Motion Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .svg-nav-path {
+    animation: none;
+  }
+  .svg-blocked-barricade {
+    animation: none;
+  }
+}
